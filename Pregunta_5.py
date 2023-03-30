@@ -53,19 +53,13 @@ class Encriptador:
         self.generar_tablas()
 
     def generar_tablas(self):
-        caracteres = [chr(i) for i in range(32, 125)]
-        permutacion = [
-            ' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/',
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?',
-            '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-            'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_',
-            '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-            'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}'
-        ]
+        caracteres = [chr(i) for i in range(32, 126)]
+        desplazamiento = 8
         
         for i, c in enumerate(caracteres):
-            self.encriptar_tabla.agregar(c, ''.join(permutacion[i:i + 8]))
-            self.desencriptar_tabla.agregar(''.join(permutacion[i:i + 8]), c)
+            encriptado = ''.join(chr(((ord(c) - 32 + j) % 94) + 32) for j in range(1, desplazamiento + 1))
+            self.encriptar_tabla.agregar(c, encriptado)
+            self.desencriptar_tabla.agregar(encriptado, c)
 
     def encriptar(self, mensaje):
         encriptado = []
@@ -94,14 +88,14 @@ class Encriptador:
                 i += 1
         return ''.join(desencriptado)
 
+def main(capacidad, mensaje):
+    encriptador = Encriptador(capacidad)
 
+    mensaje_encriptado = encriptador.encriptar(mensaje)
+    print("Mensaje encriptado:", mensaje_encriptado)
 
-capacidad = 131
-encriptador = Encriptador(capacidad)
+    mensaje_desencriptado = encriptador.desencriptar(mensaje_encriptado)
+    print("Mensaje desencriptado:", mensaje_desencriptado)
 
-mensaje = "Que la fuerza te acompañe"
-mensaje_encriptado = encriptador.encriptar(mensaje)
-print("Mensaje encriptado:", mensaje_encriptado)
-
-mensaje_desencriptado = encriptador.desencriptar(mensaje_encriptado)
-print("Mensaje desencriptado:", mensaje_desencriptado)
+if __name__ == "__main__":
+    main(93, "Que la fuerza te acompañe!")
