@@ -5,6 +5,8 @@
 #  cada carácter deberá ser encriptado a ocho caracteres;
 #  se deberá generar dos tablas hash para encriptar y desencriptar, para los caracteres desde el “ ” hasta el “}” –es decir desde el 32 al 125 de la tabla ASCII.
 
+from builtins import chr
+
 class NodoHash:
     def __init__(self, clave, valor):
         self.clave = clave
@@ -51,11 +53,19 @@ class Encriptador:
         self.generar_tablas()
 
     def generar_tablas(self):
-        caracteres = [chr(i) for i in range(32, 126)]
-        for caracter in caracteres:
-            clave = ''.join(caracter for _ in range(8))
-            self.encriptar_tabla.agregar(caracter, clave)
-            self.desencriptar_tabla.agregar(clave, caracter)
+        caracteres = [chr(i) for i in range(32, 125)]
+        permutacion = [
+            ' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?',
+            '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+            'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_',
+            '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+            'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}'
+        ]
+        
+        for i, c in enumerate(caracteres):
+            self.encriptar_tabla.agregar(c, ''.join(permutacion[i:i + 8]))
+            self.desencriptar_tabla.agregar(''.join(permutacion[i:i + 8]), c)
 
     def encriptar(self, mensaje):
         encriptado = []
@@ -73,7 +83,11 @@ class Encriptador:
         while i < len(mensaje_encriptado):
             chunk = mensaje_encriptado[i:i + 8]
             if all(32 <= ord(c) <= 125 for c in chunk):
-                desencriptado.append(self.desencriptar_tabla.buscar(chunk))
+                resultado = self.desencriptar_tabla.buscar(chunk)
+                if resultado is not None:
+                    desencriptado.append(resultado)
+                else:
+                    desencriptado.append(chunk)
                 i += 8
             else:
                 desencriptado.append(mensaje_encriptado[i])
@@ -81,7 +95,8 @@ class Encriptador:
         return ''.join(desencriptado)
 
 
-capacidad = 97
+
+capacidad = 131
 encriptador = Encriptador(capacidad)
 
 mensaje = "Que la fuerza te acompañe"
