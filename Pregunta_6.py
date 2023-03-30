@@ -70,3 +70,7 @@ def determinante_recursivo(matriz):
             det += ((-1) ** j) * matriz.obtener_elemento(0, j) * determinante_recursivo(matriz.submatriz(0, j))
         return det
     
+def determinante_iterativo(matriz):
+    assert matriz.filas == matriz.columnas, "La matriz debe ser cuadrada"
+    matriz_copia = matriz.copiar()
+    return matriz_copia.eliminacion_gauss()
