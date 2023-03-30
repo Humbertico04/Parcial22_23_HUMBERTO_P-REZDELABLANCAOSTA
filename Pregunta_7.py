@@ -136,4 +136,12 @@ class Polinomio(object):
                     aux.sig = aux.sig.sig
                     to_remove.sig = None
 
-    
+    def existe_termino(polinomio, termino):
+        """Verifica si existe un termino en el polinomio"""
+        aux = polinomio.termino_mayor
+        while (aux is not None and aux.info.termino != termino):
+            aux = aux.sig
+        if (aux is not None):
+            return True
+        else:
+            return False
