@@ -1,2 +1,2 @@
 # examen_parcial_humberto
-git@github.com:Humbertico04/examen_parcial_humberto.git
+git@github.com:Humbertico04/Parcial22_23_HUMBERTO_P-REZDELABLANCAOSTA.git
