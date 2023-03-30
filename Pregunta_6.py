@@ -74,3 +74,44 @@ def determinante_iterativo(matriz):
     assert matriz.filas == matriz.columnas, "La matriz debe ser cuadrada"
     matriz_copia = matriz.copiar()
     return matriz_copia.eliminacion_gauss()
+
+# PRUEBAS
+import unittest
+
+class TestMatriz(unittest.TestCase):
+    def setUp(self):
+        self.matriz = Matriz(5, 5)
+        self.matriz.asignar_elemento(0, 0, 1)
+        self.matriz.asignar_elemento(0, 1, 6)
+        self.matriz.asignar_elemento(0, 2, 2)
+        self.matriz.asignar_elemento(0, 3, 3)
+        self.matriz.asignar_elemento(0, 4, 4)
+        self.matriz.asignar_elemento(1, 0, 9)
+        self.matriz.asignar_elemento(1, 1, 5)
+        self.matriz.asignar_elemento(1, 2, 7)
+        self.matriz.asignar_elemento(1, 3, 8)
+        self.matriz.asignar_elemento(1, 4, 9)
+        self.matriz.asignar_elemento(2, 0, 4)
+        self.matriz.asignar_elemento(2, 1, 3)
+        self.matriz.asignar_elemento(2, 2, 2)
+        self.matriz.asignar_elemento(2, 3, 1)
+        self.matriz.asignar_elemento(2, 4, 0)
+        self.matriz.asignar_elemento(3, 0, 1)
+        self.matriz.asignar_elemento(3, 1, 2)
+        self.matriz.asignar_elemento(3, 2, 3)
+        self.matriz.asignar_elemento(3, 3, 4)
+        self.matriz.asignar_elemento(3, 4, 5)
+        self.matriz.asignar_elemento(4, 0, 6)
+        self.matriz.asignar_elemento(4, 1, 7)
+        self.matriz.asignar_elemento(4, 2, 8)
+        self.matriz.asignar_elemento(4, 3, 9)
+        self.matriz.asignar_elemento(4, 4, 0)
+
+    def test_determinante_recursivo(self):
+        self.assertEqual(determinante_recursivo(self.matriz), 1050)
+
+    def test_determinante_iterativo(self):
+        self.assertAlmostEqual(determinante_iterativo(self.matriz), 1050)
+
+if __name__ == "__main__":
+    unittest.main()
