@@ -39,3 +39,19 @@ class Alumno(object):
     
     def __str__(self):
         return "Nombre: " + self.nombre + ", nota: " + str(self.nota)
+    
+# Experimentacíon
+import unittest
+class TestAlumno(unittest.TestCase):
+    def setUp(self):
+        self.alumno1 = Alumno("Pepe", 6)
+        self.alumno2 = Alumno("Juan", 4)
+        self.alumno3 = Alumno("Ana", 10)
+    
+    def test_str(self):
+        self.assertEqual(str(self.alumno1), "Nombre: Pepe, nota: 6")
+        self.assertEqual(str(self.alumno2), "Nombre: Juan, nota: 4")
+        self.assertEqual(str(self.alumno3), "Nombre: Ana, nota: 10")
+
+if __name__ == "__main__":
+    unittest.main()

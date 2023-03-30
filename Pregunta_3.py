@@ -24,9 +24,6 @@ class Alumno(object):
         else:
             print("El alumno ha suspendido")
             return False
-    
-    def __str__(self):
-        return "Nombre: " + self.nombre + ", nota: " + str(self.nota)
 
 # Experimentacíon
 import unittest
